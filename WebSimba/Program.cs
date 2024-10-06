@@ -18,9 +18,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddCors();
 builder.Services.AddAutoMapper(typeof(AppMapperProfile));
 
 var app = builder.Build();
+
+app.UseCors(opt =>
+    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
